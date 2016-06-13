@@ -25,6 +25,9 @@
 namespace availability_stash;
 defined('MOODLE_INTERNAL') || die();
 
+use block_stash\manager;
+use moodle_exception;
+
 /**
  * Condition class.
  *
@@ -71,13 +74,36 @@ class condition extends \core_availability\condition {
      * @return bool True if available.
      */
     public function is_available($not, \core_availability\info $info, $grabthelot, $userid) {
+        $available = false;
+
         if (!$this->objectid) {
             // We got a problem, this shouldn't happen. Silently ignore.
-            return false;
+            return $available;
         }
 
-        // TODO Hook in the stash API.
-        $available = false;
+        $manager = manager::get($info->get_course()->id);
+        if (!$manager->is_enabled()) {
+            return $available;
+        }
+
+        try {
+            $item = $manager->get_user_item($userid, $this->objectid);
+        } catch (moodle_exception $e) {
+            // There was an error, probably the item was deleted but the rule is still present.
+            debugging($e->getMessage(), DEBUG_DEVELOPER);
+            return $available;
+        }
+
+        $quantity = $item->get_quantity();
+        $requiredquantity = $this->quantity;
+        if ($this->condition == self::EQUAL && $quantity == $requiredquantity) {
+            $available = true;
+        } else if ($this->condition == self::LESSTHAN && $quantity < $requiredquantity) {
+            $available = true;
+        } else if ($this->condition == self::MORETHAN && $quantity > $requiredquantity) {
+            $available = true;
+        }
+
         return $available;
     }
 
@@ -97,7 +123,7 @@ class condition extends \core_availability\condition {
         $a = [
             'condition' => $this->get_readable_condition(),
             'quantity' => $this->quantity,
-            'object' => $this->get_object_name(),
+            'object' => $this->get_object_name($info),
         ];
         $stringid = $not ? 'levelnnotrequiredtoaccess' : 'objectnrequiredtogetaccess';
         return get_string($stringid, 'availability_stash', $a);
@@ -121,12 +147,15 @@ class condition extends \core_availability\condition {
      *
      * @return string
      */
-    protected function get_object_name() {
-        if ($this->objectid) {
-            // TODO Hook in the stash API.
-            return 'Apple';
+    protected function get_object_name(\core_availability\info $info) {
+        $manager = manager::get($info->get_course()->id);
+        try {
+            $item = $manager->get_item($this->objectid);
+        } catch (moodle_exception $e) {
+            // Whoops.
+            return get_string('unknownobject', 'availability_stash');
         }
-        return get_string('unknownobject', 'availability_stash');
+        return format_string($item->get_name(), true, ['context' => $manager->get_context()]);
     }
 
     /**

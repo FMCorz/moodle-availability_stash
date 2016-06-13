@@ -73,19 +73,20 @@ class frontend extends \core_availability\frontend {
      * @return array Array of parameters for the JavaScript function
      */
     protected function get_javascript_init_params($course, \cm_info $cm = null, \section_info $section = null) {
+        $manager = manager::get($course->id);
+        $items = $manager->get_items();
+
         return [(object) [
             'conditions' => [
                 (object) ['value' => condition::EQUAL, 'name' => get_string('exactly', 'availability_stash')],
                 (object) ['value' => condition::LESSTHAN, 'name' => get_string('lessthan', 'availability_stash')],
                 (object) ['value' => condition::MORETHAN, 'name' => get_string('morethan', 'availability_stash')],
             ],
-            'objects' => [
-                // TODO Hook in the stash API.
-                (object) ['id' => 1, 'name' => 'Shovel'],
-                (object) ['id' => 2, 'name' => 'Apple'],
-                (object) ['id' => 3, 'name' => 'Sword'],
-                (object) ['id' => 4, 'name' => 'Gun'],
-            ]
+            'objects' => array_map(function($item) use ($manager) {
+                // Yes, it's very unreadable...
+                $name = format_string($item->get_name(), true, ['context' => $manager->get_context()]);
+                return (object) ['id' => $item->get_id(), 'name' => $name];
+            }, $items)
         ]];
     }
 

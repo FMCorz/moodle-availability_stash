@@ -25,6 +25,8 @@
 namespace availability_stash;
 defined('MOODLE_INTERNAL') || die();
 
+use block_stash\manager;
+
 /**
  * Frontend class.
  *
@@ -44,10 +46,8 @@ class frontend extends \core_availability\frontend {
      * @return bool False when adding is disabled.
      */
     protected function allow_add($course, \cm_info $cm = null, \section_info $section = null) {
-        // $xpman = \block_xp_manager::get($course->id);
-        // return $xpman->is_enabled();
-        // TODO Hook in the stash API.
-        return true;
+        $manager = manager::get($course->id);
+        return $manager->is_enabled();
     }
 
     /**

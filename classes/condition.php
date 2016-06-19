@@ -26,7 +26,11 @@ namespace availability_stash;
 defined('MOODLE_INTERNAL') || die();
 
 use block_stash\manager;
+use block_stash\stash;
 use moodle_exception;
+use restore_dbops;
+use backup;
+use base_logger;
 
 /**
  * Condition class.
@@ -163,7 +167,7 @@ class condition extends \core_availability\condition {
         return json_encode([
             'condition' => $this->condition,
             'quantity' => $this->quantity,
-            'objectid' => $this->object,
+            'objectid' => $this->objectid,
         ]);
     }
 
@@ -226,8 +230,44 @@ class condition extends \core_availability\condition {
         return (object) [
             'condition' => $this->condition,
             'quantity' => $this->quantity,
-            'objectid' => $this->object,
+            'objectid' => $this->objectid,
+
+            // Grrr... the type needs to be added manually whereas it is not needed in JS.
+            // If not added the structure becomes invalid as it is missing the type. That
+            // is particularly annoying when dealing with backup and restore.
+            'type' => $this->get_type(),
         ];
+    }
+
+    /**
+     * Update after restore.
+     *
+     * @param int $restoreid Restore ID.
+     * @param int $courseid Course ID.
+     * @param base_logger $logger Backup logger.
+     * @param string $name Thing name.
+     * @return bool
+     */
+    public function update_after_restore($restoreid, $courseid, base_logger $logger, $name) {
+        $rec = restore_dbops::get_backup_ids_record($restoreid, 'block_stash_item', $this->objectid);
+        if (!$rec || !$rec->newitemid) {
+
+            // Check if we happen to be restoring on the same course, if so nothing to do.
+            // TODO Make that more solid as IDs could clash across sites.
+            if (stash::course_has_item($courseid, $this->objectid)) {
+                return false;
+            }
+
+            // Otherwise it's a warning.
+            $this->objectid = null;
+            $logger->process('Restored item (' . $name . ') has availability condition on stash object that was not restored',
+                backup::LOG_WARNING);
+
+        } else {
+            $this->objectid = (int) $rec->newitemid;
+        }
+
+        return true;
     }
 
 }

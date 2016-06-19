@@ -120,13 +120,38 @@ class condition extends \core_availability\condition {
      * @return string Information string (for admin) about all restrictions on this item.
      */
     public function get_description($full, $not, \core_availability\info $info) {
-        $a = [
-            'condition' => $this->get_readable_condition(),
+        if ($this->condition == self::EQUAL) {
+            if ($this->quantity == 0) {
+                $strid = $not ? 'youhavegota' : 'youhaventgota';
+            } else if ($this->quantity == 1) {
+                $strid = $not ? 'youhaventgotna' : 'youhavegota';
+            } else {
+                $strid = $not ? 'youhaventgotna' : 'youhavegotna';
+            }
+
+        } else if ($this->condition == self::LESSTHAN) {
+            if ($this->quantity <= 1) {
+                $strid = $not ? 'youhavegota' : 'youhaventgotanya';
+            } else {
+                $strid = $not ? 'youhaventgotlessthanna' : 'youhavegotlessthanna';
+            }
+
+        } else if ($this->condition == self::MORETHAN) {
+            if ($this->quantity == 0) {
+                $strid = $not ? 'youhaventgotanya' : 'youhavegota';
+            } else {
+                $strid = $not ? 'youhaventgotmorethanna' : 'youhavegotmorethanna';
+            }
+
+        } else {
+            return get_string('unknowncondition', 'availability_stash');
+
+        }
+
+        return get_string($strid, 'availability_stash', [
             'quantity' => $this->quantity,
             'object' => $this->get_object_name($info),
-        ];
-        $stringid = $not ? 'levelnnotrequiredtoaccess' : 'objectnrequiredtogetaccess';
-        return get_string($stringid, 'availability_stash', $a);
+        ]);
     }
 
     /**
@@ -140,6 +165,22 @@ class condition extends \core_availability\condition {
             'quantity' => $this->quantity,
             'objectid' => $this->object,
         ]);
+    }
+
+    /**
+     * Get a generic description.
+     *
+     * @param bool $not Set true if we are inverting the condition.
+     * @return string
+     */
+    protected function get_generic_description($not) {
+        $a = [
+            'condition' => $this->get_readable_condition(),
+            'quantity' => $this->quantity,
+            'object' => $this->get_object_name($info),
+        ];
+        $stringid = $not ? 'objectnnotrequiredtogetaccess' : 'objectnrequiredtogetaccess';
+        return get_string($stringid, 'availability_stash', $a);
     }
 
     /**

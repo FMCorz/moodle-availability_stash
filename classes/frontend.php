@@ -47,7 +47,7 @@ class frontend extends \core_availability\frontend {
      */
     protected function allow_add($course, \cm_info $cm = null, \section_info $section = null) {
         $manager = manager::get($course->id);
-        return $manager->is_enabled() && $manager->has_items();
+        return $manager->is_enabled() && $manager->has_items() && $manager->can_manage();
     }
 
     /**
@@ -74,7 +74,7 @@ class frontend extends \core_availability\frontend {
      */
     protected function get_javascript_init_params($course, \cm_info $cm = null, \section_info $section = null) {
         $manager = manager::get($course->id);
-        $items = $manager->is_enabled() ? $manager->get_items() : [];
+        $items = ($manager->is_enabled() && $manager->can_manage()) ? $manager->get_items() : [];
 
         return [(object) [
             'conditions' => [

@@ -87,7 +87,17 @@ M.availability_stash.form = Y.merge(M.core_availability.plugin, {
             node.setHTML(M.util.get_string('theirstashcontains', 'availability_stash', stra));
             this._node = node;
 
-            Y.one('#fitem_id_availabilityconditionsjson').delegate('change', function() {
+            var availabilitynode;
+
+            // Check for the new selector
+            if (Y.one('.availability-field') !== null) {
+                availabilitynode = Y.one('.availability-field');
+            } else {
+                // Use the old selector.
+                availabilitynode = Y.one('#fitem_id_availabilityconditionsjson');
+            }
+
+            availabilitynode.delegate('change', function() {
                 M.core_availability.form.update();
             }, '.availability_stash select, .availability_stash input');
         }

@@ -15,20 +15,37 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version file.
+ * Privacy class for requesting user data.
  *
  * @package    availability_stash
- * @copyright  2016 Frédéric Massart - FMCorz.net
+ * @copyright  2018 Adrian Greeve <adriangreeve.com>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+namespace availability_stash\privacy;
+
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2018042500;
-$plugin->requires  = 2015051100;
-$plugin->component = 'availability_stash';
-$plugin->release   = '1.2';
-$plugin->maturity  = MATURITY_ALPHA;
-$plugin->dependencies = array(
-    'block_stash'  => 2016052300,
-);
+use \core_privacy\local\metadata\null_provider;
+
+/**
+ * Privacy class for requesting user data.
+ *
+ * @package    availability_stash
+ * @copyright  2018 Adrian Greeve <adriangreeve.com>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class provider implements null_provider {
+
+    use \core_privacy\local\legacy_polyfill;
+
+    /**
+     * Get the language string identifier with the component's language
+     * file to explain why this plugin stores no data.
+     *
+     * @return  string
+     */
+    public static function _get_reason() {
+        return 'privacy:null';
+    }
+}

@@ -33,6 +33,7 @@ $string['object'] = 'object';
 $string['objectnnotrequiredtogetaccess'] = 'There is not {$a->condition} {$a->quantity}x \'{$a->object}\' in your stash.';
 $string['objectnrequiredtogetaccess'] = 'There is {$a->condition} {$a->quantity}x \'{$a->object}\' in your stash.';
 $string['pluginname'] = 'Stash availability';
+$string['privacy:null'] = '-';
 $string['quantity'] = 'quantity';
 $string['theirstashcontains'] = 'Their stash contains {$a->conditions} {$a->quantity} {$a->objects}';
 $string['title'] = 'Stash object';

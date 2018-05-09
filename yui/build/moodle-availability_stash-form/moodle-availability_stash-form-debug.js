@@ -24,7 +24,7 @@ YUI.add('moodle-availability_stash-form', function (Y, NAME) {
 var TPLCONDITIONS = '' +
     '<label>' +
     '    <span class="accesshide">{{get_string "condition" "availability_stash"}}</span>' +
-    '    <select name="condition">' +
+    '    <select name="condition" class="form-control">' +
     '       {{#each conditions}}' +
     '           <option value="{{value}}">{{name}}</option>' +
     '       {{/each}}' +
@@ -34,13 +34,13 @@ var TPLCONDITIONS = '' +
 var TPLQUANTITY = '' +
     '<label>' +
     '    <span class="accesshide">{{get_string "quantity" "availability_stash"}}</span>' +
-    '    <input type="number" name="quantity" class="quantity" min="0" value="1">' +
+    '    <input type="number" name="quantity" class="quantity form-control" min="0" value="1">' +
     '</label>';
 
 var TPLOBJECTS = '' +
     '<label>' +
     '    <span class="accesshide">{{get_string "object" "availability_stash"}}</span>' +
-    '    <select name="object">' +
+    '    <select name="object" class="form-control">' +
     '       {{#each objects}}' +
     '           <option value="{{id}}">{{name}}</option>' +
     '       {{/each}}' +
@@ -51,7 +51,7 @@ var SELECTORS = {
     CONDITION: 'select[name="condition"]',
     QUANTITY: 'input[name="quantity"]',
     OBJECT: 'select[name="object"]'
-}
+};
 
 M.availability_stash = M.availability_stash || {};
 
@@ -128,7 +128,7 @@ M.availability_stash.form = Y.merge(M.core_availability.plugin, {
             condition: parent.one(SELECTORS.CONDITION),
             quantity: parent.one(SELECTORS.QUANTITY),
             object: parent.one(SELECTORS.OBJECT)
-        }
+        };
     },
 
     fillValue: function(value, node) {

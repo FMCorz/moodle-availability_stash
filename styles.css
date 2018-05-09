@@ -1,8 +1,11 @@
-.availability-item .availability_stash .quantity {
-    width: 30px;
+.availability-item .availability_stash label {
+    display: inline-block;
 }
-.availability-item .availability_stash input[type="number"] {
-    /* Copy from #fitem_id_availabilityconditionsjson input[type=text]. */
-    position:relative;
-    top: 4px;
+.availability-item .availability_stash .quantity {
+    width: 4em;
+}
+.availability-item .availability_stash label,
+.availability-item .availability_stash select,
+.availability-item .availability_stash input {
+    margin-bottom: 0;
 }

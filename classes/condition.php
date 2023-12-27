@@ -99,6 +99,10 @@ class condition extends \core_availability\condition {
         }
 
         $quantity = $item->get_quantity();
+        if (empty($quantity)) {
+            // When not having an item at all, the value is null instead of "0".
+            $quantity = 0;
+        }
         $requiredquantity = $this->quantity;
         if ($this->condition == self::EQUAL && $quantity == $requiredquantity) {
             $available = true;

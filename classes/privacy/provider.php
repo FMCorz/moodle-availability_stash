@@ -24,9 +24,7 @@
 
 namespace availability_stash\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
-use \core_privacy\local\metadata\null_provider;
+use core_privacy\local\metadata\null_provider;
 
 /**
  * Privacy class for requesting user data.
@@ -45,7 +43,7 @@ class provider implements null_provider {
      *
      * @return  string
      */
-    public static function _get_reason() {
+    public static function _get_reason() { // @codingStandardsIgnoreLine
         return 'privacy:null';
     }
 }

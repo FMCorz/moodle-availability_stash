@@ -23,7 +23,6 @@
  */
 
 namespace availability_stash;
-defined('MOODLE_INTERNAL') || die();
 
 use block_stash\manager;
 use block_stash\stash;
@@ -41,12 +40,18 @@ use base_logger;
  */
 class condition extends \core_availability\condition {
 
+    /** Equal condition. */
     const EQUAL = '==';
+    /** Less than condition. */
     const LESSTHAN = '<';
+    /** More than condition. */
     const MORETHAN = '>';
 
+    /** @var string The condition. */
     protected $condition = self::EQUAL;
+    /** @var int The quantity. */
     protected $quantity = 1;
+    /** @var int|null The object ID. */
     protected $objectid = null;
 
     /**
@@ -120,7 +125,7 @@ class condition extends \core_availability\condition {
      *
      * @param bool $full Set true if this is the 'full information' view.
      * @param bool $not Set true if we are inverting the condition.
-     * @param info $info Item we're checking.
+     * @param \core_availability\info $info Item we're checking.
      * @return string Information string (for admin) about all restrictions on this item.
      */
     public function get_description($full, $not, \core_availability\info $info) {
@@ -185,6 +190,7 @@ class condition extends \core_availability\condition {
     /**
      * Get the name of the object in this rule.
      *
+     * @param \core_availability\info $info Availability info.
      * @return string
      */
     protected function get_object_name(\core_availability\info $info) {

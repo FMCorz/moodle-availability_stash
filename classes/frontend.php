@@ -23,7 +23,6 @@
  */
 
 namespace availability_stash;
-defined('MOODLE_INTERNAL') || die();
 
 use block_stash\manager;
 
@@ -86,8 +85,8 @@ class frontend extends \core_availability\frontend {
                 // Yes, it's very unreadable...
                 $name = format_string($item->get_name(), true, ['context' => $manager->get_context()]);
                 return (object) ['id' => $item->get_id(), 'name' => $name];
-            }, $items)
-        ]];
+            }, $items),
+        ], ];
     }
 
 }

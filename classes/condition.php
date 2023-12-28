@@ -176,15 +176,10 @@ class condition extends \core_availability\condition {
      *
      * @param bool $not Set true if we are inverting the condition.
      * @return string
+     * @deprecated Since v1.2.2 without replacement.
      */
     protected function get_generic_description($not) {
-        $a = [
-            'condition' => $this->get_readable_condition(),
-            'quantity' => $this->quantity,
-            'object' => $this->get_object_name($info),
-        ];
-        $stringid = $not ? 'objectnnotrequiredtogetaccess' : 'objectnrequiredtogetaccess';
-        return get_string($stringid, 'availability_stash', $a);
+        return 'No description';
     }
 
     /**

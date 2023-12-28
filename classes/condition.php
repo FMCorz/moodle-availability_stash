@@ -59,10 +59,10 @@ class condition extends \core_availability\condition {
             $this->condition = $structure->condition;
         }
         if (isset($structure->quantity)) {
-            $this->quantity = $structure->quantity;
+            $this->quantity = (int) $structure->quantity;
         }
         if (isset($structure->objectid)) {
-            $this->objectid = $structure->objectid;
+            $this->objectid = (int) $structure->objectid;
         }
     }
 
@@ -98,11 +98,7 @@ class condition extends \core_availability\condition {
             return $available;
         }
 
-        $quantity = $item->get_quantity();
-        if (empty($quantity)) {
-            // When not having an item at all, the value is null instead of "0".
-            $quantity = 0;
-        }
+        $quantity = (int) $item->get_quantity();
         $requiredquantity = $this->quantity;
         if ($this->condition == self::EQUAL && $quantity == $requiredquantity) {
             $available = true;

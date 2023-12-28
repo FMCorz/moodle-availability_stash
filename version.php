@@ -24,10 +24,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2018050901;
+$plugin->version   = 2023122800;
 $plugin->requires  = 2015051100;
 $plugin->component = 'availability_stash';
-$plugin->release   = '1.2.1';
+$plugin->release   = '1.2.2';
 $plugin->maturity  = MATURITY_STABLE;
 $plugin->dependencies = [
     'block_stash'  => 2016052300,

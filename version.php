@@ -25,7 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2023122800;
-$plugin->requires  = 2015051100;
+$plugin->requires  = 2019052000; // Moodle 3.7.
 $plugin->component = 'availability_stash';
 $plugin->release   = '1.2.2';
 $plugin->maturity  = MATURITY_STABLE;

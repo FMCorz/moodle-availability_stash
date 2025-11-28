@@ -1,6 +1,13 @@
 CHANGELOG
 =========
 
+v1.2.3
+------
+
+- Compatibility with PHP 8.4
+- Raised minimum required version to Moodle 3.7
+- PHP 7.1 required through Moodle 3.7 requirement
+
 v1.2.2
 ------
 

@@ -1,0 +1,11 @@
+{
+    "name": "fmcorz/moodle-availability_stash",
+    "type": "moodle-availability",
+    "require": {
+        "composer/installers": "~2.0"
+    },
+    "suggests": {
+        "fmcorz/moodle-block_stash": "The block component for the Stash collection of plugins",
+        "fmcorz/moodle-filter_stash": "An Moodle filter for the Stash collection of plugins"
+    }
+}

@@ -1,0 +1,24 @@
+# Schema: https://camp-registry.org/schema/listing.schema.json
+name: Stash Availability
+summary: Unlock activities, resources and course sections based on the items learners have collected in Stash.
+description: |
+  ## Unlock course content with collected items.
+
+  Stash Availability lets you control access to activities, resources and course sections according to the items in each learner's stash. Make a collected object the key to the next activity, or require several items before opening a bonus challenge.
+
+  ## Features
+
+  - Restrict course content based on a chosen Stash item.
+  - Require exactly, less than or more than a quantity you choose.
+  - Combine item requirements with Moodle's other access restrictions.
+
+  ## Requirements
+
+  This plugin requires the Stash block.
+
+labels:
+  - fully-free
+
+links:
+  issues: https://github.com/FMCorz/moodle-availability_stash/issues
+  changelog: https://github.com/FMCorz/moodle-availability_stash/blob/HEAD/CHANGELOG.md

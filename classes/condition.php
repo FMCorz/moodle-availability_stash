@@ -113,6 +113,10 @@ class condition extends \core_availability\condition {
             $available = true;
         }
 
+        if ($not) {
+            $available = !$available;
+        }
+
         return $available;
     }
 

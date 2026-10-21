@@ -22,7 +22,7 @@
 var TPLCONDITIONS = '' +
     '<label>' +
     '    <span class="accesshide">{{get_string "condition" "availability_stash"}}</span>' +
-    '    <select name="condition" class="form-control">' +
+    '    <select name="condition" class="form-control form-select">' +
     '       {{#each conditions}}' +
     '           <option value="{{value}}">{{name}}</option>' +
     '       {{/each}}' +
@@ -38,7 +38,7 @@ var TPLQUANTITY = '' +
 var TPLOBJECTS = '' +
     '<label>' +
     '    <span class="accesshide">{{get_string "object" "availability_stash"}}</span>' +
-    '    <select name="object" class="form-control">' +
+    '    <select name="object" class="form-control form-select">' +
     '       {{#each objects}}' +
     '           <option value="{{id}}">{{name}}</option>' +
     '       {{/each}}' +
@@ -51,7 +51,7 @@ var SELECTORS = {
     OBJECT: 'select[name="object"]'
 };
 
-M.availability_stash = M.availability_stash || {};
+M.availability_stash = M.availability_stash || {}; // eslint-disable-line
 
 M.availability_stash.form = Y.merge(M.core_availability.plugin, {
 
@@ -67,7 +67,7 @@ M.availability_stash.form = Y.merge(M.core_availability.plugin, {
     _getDefaultNode: function() {
         var node,
             stra = {},
-            objectsNode,
+            template,
             tpl;
 
         if (!this._node) {
@@ -137,7 +137,7 @@ M.availability_stash.form = Y.merge(M.core_availability.plugin, {
         value.objectid = nodes.object.get('value');
     },
 
-    fillErrors: function(errors, node) {
+    fillErrors: function() {
         // Errors can only happen when the form is hacked, which we do not need to handle here.
     }
 });

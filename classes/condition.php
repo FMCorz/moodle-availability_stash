@@ -39,7 +39,6 @@ use base_logger;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class condition extends \core_availability\condition {
-
     /** Equal condition. */
     const EQUAL = '==';
     /** Less than condition. */
@@ -141,24 +140,20 @@ class condition extends \core_availability\condition {
             } else {
                 $strid = $not ? 'youhaventgotna' : 'youhavegotna';
             }
-
         } else if ($this->condition == self::LESSTHAN) {
             if ($this->quantity <= 1) {
                 $strid = $not ? 'youhavegota' : 'youhaventgotanya';
             } else {
                 $strid = $not ? 'youhaventgotlessthanna' : 'youhavegotlessthanna';
             }
-
         } else if ($this->condition == self::MORETHAN) {
             if ($this->quantity == 0) {
                 $strid = $not ? 'youhaventgotanya' : 'youhavegota';
             } else {
                 $strid = $not ? 'youhaventgotmorethanna' : 'youhavegotmorethanna';
             }
-
         } else {
             return get_string('unknowncondition', 'availability_stash');
-
         }
 
         return get_string($strid, 'availability_stash', [
@@ -256,7 +251,6 @@ class condition extends \core_availability\condition {
     public function update_after_restore($restoreid, $courseid, base_logger $logger, $name) {
         $rec = restore_dbops::get_backup_ids_record($restoreid, 'block_stash_item', $this->objectid);
         if (!$rec || !$rec->newitemid) {
-
             // Check if we happen to be restoring on the same course, if so nothing to do.
             // TODO Make that more solid as IDs could clash across sites.
             if (stash::course_has_item($courseid, $this->objectid)) {
@@ -265,14 +259,14 @@ class condition extends \core_availability\condition {
 
             // Otherwise it's a warning.
             $this->objectid = null;
-            $logger->process('Restored item (' . $name . ') has availability condition on stash object that was not restored',
-                backup::LOG_WARNING);
-
+            $logger->process(
+                'Restored item (' . $name . ') has availability condition on stash object that was not restored',
+                backup::LOG_WARNING
+            );
         } else {
             $this->objectid = (int) $rec->newitemid;
         }
 
         return true;
     }
-
 }

@@ -34,7 +34,6 @@ use block_stash\manager;
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class frontend extends \core_availability\frontend {
-
     /**
      * Decides whether this plugin should be available in a given course. The
      * plugin can do this depending on course or system settings.
@@ -81,12 +80,11 @@ class frontend extends \core_availability\frontend {
                 (object) ['value' => condition::LESSTHAN, 'name' => get_string('lessthan', 'availability_stash')],
                 (object) ['value' => condition::MORETHAN, 'name' => get_string('morethan', 'availability_stash')],
             ],
-            'objects' => array_map(function($item) use ($manager) {
+            'objects' => array_map(function ($item) use ($manager) {
                 // Yes, it's very unreadable...
                 $name = format_string($item->get_name(), true, ['context' => $manager->get_context()]);
                 return (object) ['id' => $item->get_id(), 'name' => $name];
             }, $items),
         ], ];
     }
-
 }

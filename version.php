@@ -24,11 +24,12 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2025112800;
+$plugin->version   = 2026102100;
 $plugin->requires  = 2019052000; // Moodle 3.7.
 $plugin->component = 'availability_stash';
-$plugin->release   = '1.2.3';
+$plugin->release   = '1.2.4';
 $plugin->maturity  = MATURITY_STABLE;
+$plugin->supported    = [37, 503];
 $plugin->dependencies = [
     'block_stash'  => 2016052300,
 ];

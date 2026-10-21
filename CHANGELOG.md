@@ -1,6 +1,12 @@
 CHANGELOG
 =========
 
+v1.2.4
+------
+
+- Fixed negated Stash restrictions ignoring the "must not" option
+- Improved restriction dropdown styling for Bootstrap 5 themes
+
 v1.2.3
 ------
 
